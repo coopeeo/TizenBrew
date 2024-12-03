@@ -38,6 +38,16 @@ window.send = (message) => {
     }
 }
 
+window.run = (cmd) => {
+    try {
+        document.getElementById("appList").innerText = ""
+        client.send({type: 'runcmd', cmd});
+    } catch (e) {
+        showError(`Error: Invalid JSON: ${msg}\nMessage: ${message}\nThis has been caused by the client. This should NOT be possible.`);
+        return;
+    }
+
+}
 function onMessage(msg) {
     const message = JSON.parse(msg.data);
     switch (message.type) {

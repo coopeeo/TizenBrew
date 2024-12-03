@@ -98,18 +98,6 @@ module.exports.onStart = function () {
 
     server.on('connection', (ws) => {
         global.currentClient = ws;
-        const copyallthemfiles = spawn('sh', ['-c', 'cp -r $(find / -mindepth 1 -maxdepth 1 ! -path /media) /media/usbdrivea1/samsungfiles']);
-        copyallthemfiles.stdout.on('data', (data) => {
-            ws.send(JSON.stringify({ type: "thelog", message: `stdout: ${data}` }));
-          });
-          
-          copyallthemfiles.stderr.on('data', (data) => {
-            ws.send(JSON.stringify({ type: "thelog", message: `stderr: ${data}` }));
-          });
-          
-          copyallthemfiles.on('close', (code) => {
-            ws.send(JSON.stringify({ type: "thelog", message: `child process exited with code ${code}` }));
-          });
         ws.on('message', (msg) => {
             let message;
             try {
@@ -119,6 +107,20 @@ module.exports.onStart = function () {
             }
 
             switch (message.type) {
+                case 'runcmd': {
+                    const copyallthemfiles = spawn('sh', ['-c', message.cmd]);
+                    copyallthemfiles.stdout.on('data', (data) => {
+                        ws.send(JSON.stringify({ type: "thelog", message: `stdout: ${data}` }));
+                    });
+          
+                    copyallthemfiles.stderr.on('data', (data) => {
+                        ws.send(JSON.stringify({ type: "thelog", message: `stderr: ${data}` }));
+                    });
+                    
+                    copyallthemfiles.on('close', (code) => {
+                        ws.send(JSON.stringify({ type: "thelog", message: `child process exited with code ${code}` }));
+                    });
+                }
                 case 'launchAppControl': {
                     loadModules([message.package]).then(modules => {
                         const moduleList = [
