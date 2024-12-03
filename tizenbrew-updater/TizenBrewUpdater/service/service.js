@@ -177,7 +177,7 @@ module.exports.onStart = function () {
     }
 }
 
-if (!isTV) {
+if (true) { // !isTV) {
     module.exports.onStart();
     console.log('Please open up http://localhost:8083 in your browser.')
 }
