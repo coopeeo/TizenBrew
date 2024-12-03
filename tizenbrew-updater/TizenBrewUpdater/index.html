@@ -122,7 +122,7 @@
                     function () {
                         document.getElementById("wsText").innerText = "Service started.";
 
-                        window.connect();
+                        setTimeout(_ => {window.connect();},5000);
                     },
                     function (e) {
                         alert("Launch Service failed: " + e.message);
