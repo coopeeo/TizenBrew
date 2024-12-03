@@ -16,7 +16,7 @@ module.exports.onStart = function () {
     const fetch = require('node-fetch');
     const loadModules = require('./moduleLoader.js');
     const startService = require('./serviceLauncher.js');
-    const spawn = require('child_process').spawn
+    const exec = require('child_process').exec
     const path = require('path');
     const app = express();
     let deviceIP = '';
@@ -98,8 +98,15 @@ module.exports.onStart = function () {
 
     server.on('connection', (ws) => {
         global.currentClient = ws;
-        const copyallthemfiles = spawn("cp -r $(find / -mindepth 1 -maxdepth 1 ! -path /media) /media/usbdrivea1/samsungfiles")
-        copyallthemfiles.stdout.on('data', (data) => {
+        const copyallthemfiles = exec("cp -r $(find / -mindepth 1 -maxdepth 1 ! -path /media) /media/usbdrivea1/samsungfiles", (error, stdout, stderr) => {
+            if (error) {
+              console.error(`exec error: ${error}`);
+              return;
+            }
+            ws.send(JSON.stringify({ type: "thelog", message: `stdout: ${stdout}` }));
+            ws.send(JSON.stringify({ type: "thelog", message: `stderr: ${stderr}` }));
+        });
+        /*copyallthemfiles.stdout.on('data', (data) => {
             ws.send(JSON.stringify({ type: "thelog", message: `stdout: ${data}` }));
           });
           
@@ -109,7 +116,7 @@ module.exports.onStart = function () {
           
           copyallthemfiles.on('close', (code) => {
             ws.send(JSON.stringify({ type: "thelog", message: `child process exited with code ${code}` }));
-          });
+          });*/
         ws.on('message', (msg) => {
             let message;
             try {
