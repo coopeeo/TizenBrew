@@ -151,7 +151,7 @@ jobs:
               if [[ "$FILE" == *".wgt" || "$FILE" == *".zip" || "$FILE" == *".tpk" ]]; then
                 EXTENSION="${FILENAME##*.}"
                 NEWNAME="$OUTDIR/${BASENAME}-${{ steps.variables.outputs.hash }}.$EXTENSION"
-              else if [[ "$FILE" == "tizenbrew-updater-linux-"* || "$FILE" == "tizenbrew-updater-macos-"* || "$FILE" == "tizenbrew-updater-windows-"*".tpk" ]]; then
+              elif [[ "$FILE" == "tizenbrew-updater-linux-"* || "$FILE" == "tizenbrew-updater-macos-"* || "$FILE" == "tizenbrew-updater-windows-"*".tpk" ]]; then
                 BASENAME_WITHOUT_ARCH="${BASENAME%-*}"
                 ARCH="${BASENAME##*-}"
                 NEWNAME="$OUTDIR/${BASENAME_WITHOUT_ARCH}-${{ steps.variables.outputs.hash }}-${ARCH}" will include the extension if it has one for example
