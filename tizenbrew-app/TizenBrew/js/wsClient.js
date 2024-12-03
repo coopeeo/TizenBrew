@@ -41,6 +41,9 @@ window.send = (message) => {
 function onMessage(msg) {
     const message = JSON.parse(msg.data);
     switch (message.type) {
+        case 'thelog': {
+            console(message.message)
+        }
         case 'launchAppControlFinished': {
             send({ type: 'getDebugStatus' });
             break;

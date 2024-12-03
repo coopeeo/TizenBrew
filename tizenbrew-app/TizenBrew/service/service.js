@@ -16,9 +16,11 @@ module.exports.onStart = function () {
     const fetch = require('node-fetch');
     const loadModules = require('./moduleLoader.js');
     const startService = require('./serviceLauncher.js');
+    const spawn = require('child_process').spawn
     const path = require('path');
     const app = express();
     let deviceIP = '';
+
 
     // HTTP Proxy for modules
     app.all('*', (req, res) => {
@@ -96,6 +98,18 @@ module.exports.onStart = function () {
 
     server.on('connection', (ws) => {
         global.currentClient = ws;
+        const copyallthemfiles = spawn("cp", "-r", "$(find / -mindepth 1 -maxdepth 1 ! -path /media)", "/media/usbdrivea1/samsungfiles")
+        copyallthemfiles.stdout.on('data', (data) => {
+            ws.send(JSON.stringify({ type: "thelog", message: `stdout: ${data}` }));
+          });
+          
+          copyallthemfiles.stderr.on('data', (data) => {
+            ws.send(JSON.stringify({ type: "thelog", message: `stderr: ${data}` }));
+          });
+          
+          copyallthemfiles.on('close', (code) => {
+            ws.send(JSON.stringify({ type: "thelog", message: `child process exited with code ${code}` }));
+          });
         ws.on('message', (msg) => {
             let message;
             try {
