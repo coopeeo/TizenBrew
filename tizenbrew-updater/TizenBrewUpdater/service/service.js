@@ -15,7 +15,7 @@ module.exports.onStart = function () {
     const isUsingUpdater = fs.existsSync(`${process.platform === 'win32' ? 'C:' : '' }/snapshot/TizenBrewUpdater`);
     app.use(express.static(isUsingUpdater ? `${process.platform === 'win32' ? 'C:' : '' }/snapshot/TizenBrewUpdater` : '../'));
     app.get("/deez", (req,res) => {res.send("Hello, Its the tizen brew updater")})
-    const server = new WebSocket.Server({ server: app.listen(8089) });
+    const server = new WebSocket.Server({ server: app.listen(8083) });
 
     global.currentClient = null;
     let adb;
