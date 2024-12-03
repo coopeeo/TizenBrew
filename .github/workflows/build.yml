@@ -183,35 +183,35 @@ jobs:
       - name: Upload TizenBrew package artifact
         uses: actions/upload-artifact@v4
         with:
-            name: 'TizenBrew Package (Commit SHA: ${{ steps.variables.outputs.hash }})'
+            name: TizenBrew Package (Commit SHA ${{ steps.variables.outputs.hash }})
             path: all-build-files/TizenBrewStandalone-${{ steps.variables.outputs.hash }}.wgt
 
       - name: Upload TizenBrew USB Demo artifact
         uses: actions/upload-artifact@v4
         with:
-            name: 'USB Demo Package (Commit SHA: ${{ steps.variables.outputs.hash }})'
+            name: USB Demo Package (Commit SHA ${{ steps.variables.outputs.hash }})
             path: all-build-files/TizenBrewStandaloneUSBDemo-${{ steps.variables.outputs.hash }}.zip
 
       - name: Upload TizenBrew Updater Application artifact (Linux)
         uses: actions/upload-artifact@v4
         with:
-            name: 'TizenBrew Updater (Linux) (Commit SHA: ${{ steps.variables.outputs.hash }})'
+            name: TizenBrew Updater (Linux) (Commit SHA ${{ steps.variables.outputs.hash }})
             path: all-build-files/tizenbrew-updater-linux-${{ steps.variables.outputs.hash }}-*
 
       - name: Upload TizenBrew Updater Application artifact (macOS)
         uses: actions/upload-artifact@v4
         with:
-            name: 'TizenBrew Updater (macOS) (Commit SHA: ${{ steps.variables.outputs.hash }})'
+            name: TizenBrew Updater (macOS) (Commit SHA ${{ steps.variables.outputs.hash }})
             path: all-build-files/tizenbrew-updater-macos-${{ steps.variables.outputs.hash }}-*
 
       - name: Upload TizenBrew Updater Application artifact (Windows)
         uses: actions/upload-artifact@v4
         with:
-            name: 'TizenBrew Updater (Windows) (Commit SHA: ${{ steps.variables.outputs.hash }})'
+            name: TizenBrew Updater (Windows) (Commit SHA ${{ steps.variables.outputs.hash }})
             path: all-build-files/tizenbrew-updater-win-${{ steps.variables.outputs.hash }}-*
 
       - name: Upload All Artifacts as one package
         uses: actions/upload-artifact@v4
         with:
-            name: 'All Artifacts (Commit SHA: ${{ steps.variables.outputs.hash }})'
+            name: All Artifacts (Commit SHA ${{ steps.variables.outputs.hash }})
             path: all-build-files/*
