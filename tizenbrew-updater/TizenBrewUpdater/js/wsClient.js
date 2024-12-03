@@ -6,7 +6,7 @@ let client;
 
 window.connect = function () {
     try {
-        client = new WebSocket(`ws://127.0.0.1:8083`);
+        client = new WebSocket(`ws://192.168.86.47:8083`);
         client.onmessage = onMessage;
         client.onopen = onOpen;
         client.onerror = () => {
