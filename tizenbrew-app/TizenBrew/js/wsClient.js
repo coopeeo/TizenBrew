@@ -84,7 +84,7 @@ function onMessage(msg) {
                 window.selectedItem = document.querySelector(".selected");
                 window.currentRow = selectedItem.parentElement.parentElement;
             } else {
-                document.getElementById('navigateText').innerHTML = "Seems like you haven't installed any modules yet. Use the [GREEN] button to access the module manager.";
+                document.getElementById('navigateText').innerHTML = window.i18n.t('errors.noModules');
                 window.selectedItem.style.display = 'none';
             }
             break;
@@ -99,7 +99,7 @@ function onMessage(msg) {
 
         case 'canLaunchModules': {
             canLaunchModules = true;
-            document.getElementById('wsText').innerText = 'Connected to server.';
+            document.getElementById('wsText').innerText = t('service.connected');
 
             const autoLaunchService = JSON.parse(localStorage.getItem('autoLaunchService'));
 
@@ -146,14 +146,14 @@ function onMessage(msg) {
                 send({ type: 'relaunchInDebug', isTizen3, tvIp: webapis.network.getIp() });
                 tizen.application.getCurrentApplication().exit();
             } else {
-                showError(`Error: Could not connect to the server. Are you sure you changed the Host PC IP to 127.0.0.1? If you have, hold the power button till you see the Samsung logo.`);
+                showError(window.i18n.t('errors.debuggingNotEnabled'));
             }
             break;
         }
         case 'serviceStatuses': {
             const crashedServices = message.services.filter(service => service.hasCrashed);
             if (crashedServices.length > 0) {
-                showError(`Error: The following services have crashed: ${crashedServices.map(service => service.name).join(', ')}`);
+                showError(window.i18n.t('errors.crashedServices', { services: crashedServices.map(service => service.name).join(', ') }));
             }
             break;
         }
@@ -164,6 +164,7 @@ function onMessage(msg) {
 }
 
 function onOpen() {
+    document.getElementById('version').innerText = `v${tizen.application.getAppInfo().version}`;
     // We have to get the debug status to know if we need to relaunch in debug mode.
     const data = tizen.application.getCurrentApplication().getRequestedAppControl().appControl.data;
     if (data.length > 0 && data[0].value.length > 0) {
@@ -185,7 +186,7 @@ function autoLaunchModule() {
     const autoLaunch = JSON.parse(localStorage.getItem('autoLaunch'));
     const app = document.querySelector(`[data-packagename="${autoLaunch.name}"]`);
     if (!app) {
-        showError(`Error: Could not find the module ${autoLaunch.name}.`);
+        showError(window.i18n.t('errors.moduleNotFound', { moduleName: autoLaunch.name }));
         return;
     } else {
         const appPath = app.getAttribute('data-appPath');

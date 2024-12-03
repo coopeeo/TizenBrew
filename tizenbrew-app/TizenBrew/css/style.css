@@ -27,6 +27,7 @@ body {
     border-radius: 28px 28px 0 0;
     background-color: #181818;
     height: 80%;
+    overflow: hidden;
 }
 
 .header {
@@ -51,6 +52,7 @@ body {
 .status {
     font-size: 1.5vw;
     padding: 0.5rem;
+    margin-top: 1rem;
     border: 0.5px solid #aaa;
     color: snow;
     border-radius: 16px;
