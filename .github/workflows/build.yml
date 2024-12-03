@@ -131,7 +131,7 @@ jobs:
         run: |
           DIRS=(
               "tizenbrew-app/TizenBrew/release"
-              "tizenbrew-updater/TizenBrewUpdater/release"
+              #"tizenbrew-updater/TizenBrewUpdater/release"
               "tizenbrew-updater/TizenBrewUpdater/dist"
           )
           OUTDIR="all-build-files"
