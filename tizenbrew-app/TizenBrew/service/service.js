@@ -55,6 +55,7 @@ module.exports.onStart = function () {
     global.currentClient = null;
     global.services = new Map();
     global.appControlData = null;
+    global.debugPort = null;
 
     function createAdbConnection(isTizen3, ip, appId) {
         deviceIP = ip;
@@ -77,6 +78,8 @@ module.exports.onStart = function () {
                 const dataString = data.toString();
                 if (dataString.includes('debug')) {
                     const port = dataString.substr(dataString.indexOf(':') + 1, 6).replace(' ', '');
+                    global.debugPort = port
+
                     startDebugging(port, adb, ip);
                 }
             });
@@ -123,7 +126,7 @@ module.exports.onStart = function () {
                     break;
                 }
                 case 'getDebugStatus': {
-                    ws.send(JSON.stringify({ type: 'debugStatus', inDebug: global.inDebug }));
+                    ws.send(JSON.stringify({ type: 'debugStatus', inDebug: global.inDebug, port: global.debugPort }));
                     break;
                 }
                 case 'canLaunchInDebug': {
