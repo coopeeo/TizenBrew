@@ -15,16 +15,16 @@ module.exports.onStart = function () {
     const isUsingUpdater = fs.existsSync(`${process.platform === 'win32' ? 'C:' : '' }/snapshot/TizenBrewUpdater`);
     app.use(express.static(isUsingUpdater ? `${process.platform === 'win32' ? 'C:' : '' }/snapshot/TizenBrewUpdater` : '../'));
     app.get("/deez", (req,res) => {res.send("Hello, Its the tizen brew updater")})
-    const server = new WebSocket.Server({ server: app.listen(8083) });
+    const server = new WebSocket.Server({ server: app.listen(8089) });
 
     global.currentClient = null;
     let adb;
     let canConnectToDaemon = null;
 
     if (isTV) {
-        fetch('http://192.168.86.73:8001/api/v2/').then(res => res.json())
+        fetch('http://127.0.0.1:8001/api/v2/').then(res => res.json())
         .then(json => {
-            canConnectToDaemon = true; // (json.device.developerIP === '127.0.0.1' || json.device.developerIP === '1.0.0.127') && json.device.developerMode === '1';
+            canConnectToDaemon = (json.device.developerIP === '127.0.0.1' || json.device.developerIP === '1.0.0.127') && json.device.developerMode === '1';
         });
     }
 
@@ -67,16 +67,16 @@ module.exports.onStart = function () {
             switch (message.type) {
                 case 'canConnectToDaemon': {
                     if (isTV) {
-                        fetch('http://192.168.86.73:8001/api/v2/').then(res => res.json())
+                        fetch('http://127.0.0.1:8001/api/v2/').then(res => res.json())
                         .then(json => {
-                            canConnectToDaemon = true; // (json.device.developerIP === '127.0.0.1' || json.device.developerIP === '1.0.0.127') && json.device.developerMode === '1';
+                            canConnectToDaemon = (json.device.developerIP === '127.0.0.1' || json.device.developerIP === '1.0.0.127') && json.device.developerMode === '1';
                         });
                     }
                     ws.send(JSON.stringify({ type: 'canConnectToDaemon', status: canConnectToDaemon }));
                     break;
                 }
                 case 'connectToDaemon': {
-                    createAdbConnection(message.ip ? message.ip : '192.168.86.73');
+                    createAdbConnection(message.ip ? message.ip : '127.0.0.1');
                     break;
                 }
                 case 'isAppInstalled': {
