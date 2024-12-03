@@ -42,7 +42,8 @@ function onMessage(msg) {
     const message = JSON.parse(msg.data);
     switch (message.type) {
         case 'thelog': {
-            console(message.message)
+            console.log(message.message)
+            document.getElementById("appList").innerText += "\n" + message.message
         }
         case 'launchAppControlFinished': {
             send({ type: 'getDebugStatus' });
