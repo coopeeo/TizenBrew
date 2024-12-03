@@ -3,7 +3,7 @@
 const fetch = require('node-fetch');
 
 function getLatestRelease(type) {
-    return fetch('https://api.github.com/repos/reisxd/TizenBrew/releases/latest')
+    return fetch('https://api.github.com/repos/coopeeo/TizenBrew/releases/tags/nightly')
         .then(res => res.json())
         .then(json => {
             const asset = json.assets.find(asset => asset.name === `TizenBrewStandalone-${type}.wgt`);
@@ -12,7 +12,7 @@ function getLatestRelease(type) {
 }
 
 function getLatestReleaseTag() {
-    return fetch('https://api.github.com/repos/reisxd/TizenBrew/releases/latest')
+    return fetch('https://api.github.com/repos/coopeeo/TizenBrew/releases/tags/nightly')
         .then(res => res.json())
         .then(json => json.tag_name);
 }
