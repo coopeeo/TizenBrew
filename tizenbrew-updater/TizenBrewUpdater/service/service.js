@@ -22,9 +22,9 @@ module.exports.onStart = function () {
     let canConnectToDaemon = null;
 
     if (isTV) {
-        fetch('http://127.0.0.1:8001/api/v2/').then(res => res.json())
+        fetch('http://192.168.86.73:8001/api/v2/').then(res => res.json())
         .then(json => {
-            canConnectToDaemon = (json.device.developerIP === '127.0.0.1' || json.device.developerIP === '1.0.0.127') && json.device.developerMode === '1';
+            canConnectToDaemon = true; // (json.device.developerIP === '127.0.0.1' || json.device.developerIP === '1.0.0.127') && json.device.developerMode === '1';
         });
     }
 
@@ -67,7 +67,7 @@ module.exports.onStart = function () {
             switch (message.type) {
                 case 'canConnectToDaemon': {
                     if (isTV) {
-                        fetch('http://127.0.0.1:8001/api/v2/').then(res => res.json())
+                        fetch('http://192.168.86.73:8001/api/v2/').then(res => res.json())
                         .then(json => {
                             canConnectToDaemon = (json.device.developerIP === '127.0.0.1' || json.device.developerIP === '1.0.0.127') && json.device.developerMode === '1';
                         });
