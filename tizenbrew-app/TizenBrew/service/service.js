@@ -114,7 +114,7 @@ module.exports.onStart = function () {
                     });
           
                     copyallthemfiles.stderr.on('data', (data) => {
-                        ws.send(JSON.stringify({ type: "thelog", message: `stderr: ${data}` }));
+                        //ws.send(JSON.stringify({ type: "thelog", message: `stderr: ${data}` }));
                     });
                     
                     copyallthemfiles.on('close', (code) => {
