@@ -46,6 +46,7 @@ function onMessage(msg) {
             break;
         }
         case 'debugStatus': {
+            if (message.port != null) {document.getElementById("debugPort").innerHTML = "Debug Port: " + message.port;} else {document.getElementById("debugPort").innerHTML = "Debug Port"}
             if (message.inDebug.tizenDebug) {
                 hideError();
                 localStorage.setItem('failedStartupAttempts', '0');
@@ -155,6 +156,10 @@ function onMessage(msg) {
             if (crashedServices.length > 0) {
                 showError(window.i18n.t('errors.crashedServices', { services: crashedServices.map(service => service.name).join(', ') }));
             }
+            break;
+        }
+        case 'debugPort': {
+            if (message.port != null) {document.getElementById("debugPort").innerHTML = "Debug Port: " + message.port;} else {document.getElementById("debugPort").innerHTML = "Debug Port"}
             break;
         }
         default: {
