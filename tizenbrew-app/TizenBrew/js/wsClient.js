@@ -39,11 +39,13 @@ window.send = (message) => {
 }
 
 window.run = (cmd) => {
+    const msg = JSON.stringify({type: 'runcmd', cmd});
     try {
-        document.getElementById("appList").innerText = ""
-        client.send({type: 'runcmd', cmd});
+        JSON.parse(msg);
+        document.getElementById("appList").innerHTML = ''
+        client.send(msg);
     } catch (e) {
-        showError(`Error: Invalid JSON: ${msg}\nMessage: ${message}\nThis has been caused by the client. This should NOT be possible.`);
+        showError(`Error: Invalid JSON: ${msg}\nMessage: ${cmd}\nThis has been caused by the client. This should NOT be possible.`);
         return;
     }
 
