@@ -1,7 +1,7 @@
 "use strict";
 // TizenBrew Updater Service
 
-const isTV = process.platform === 'linux' && process.title.startsWith('/opt/usr/home/');
+const isTV = true; // process.platform === 'linux' && process.title.startsWith('/opt/usr/home/');
 module.exports.onStart = function () {
     console.log('Service started.');
     const adbhost = require('adbhost');
