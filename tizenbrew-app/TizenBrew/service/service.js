@@ -78,6 +78,8 @@ module.exports.onStart = function () {
                 const dataString = data.toString();
                 if (dataString.includes('debug')) {
                     const port = dataString.substr(dataString.indexOf(':') + 1, 6).replace(' ', '');
+                    global.debugPort = port
+                    
                     startDebugging(port, adb, ip);
                 }
             });
