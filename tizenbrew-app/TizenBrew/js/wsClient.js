@@ -55,7 +55,7 @@ function onMessage(msg) {
     switch (message.type) {
         case 'thelog': {
             console.log(message.message)
-            document.getElementById("appList").innerText += "<h1>" + message.message + "</h1>"
+            document.getElementById("appList").innerText += "\n" + message.message
         }
         case 'launchAppControlFinished': {
             send({ type: 'getDebugStatus' });
